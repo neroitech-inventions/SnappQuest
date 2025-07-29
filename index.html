@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SnappQuest - Community Powered. Mission Driven. Engage-to-Earn platform for the Solana ecosystem.">
+    <title>SnappQuest - Engage-to-Earn platform for the Solana ecosystem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        header {
+            background-color: #6366F1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #334155;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active {
+            transform: rotate(90deg);
+        }
+
+        /* Mobile Menu Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #334155;
+                padding: 80px 20px 20px;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 18px;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: left;
+                width: 100%;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #6366F1;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        #hero {
+            /* Commented out original gradient background for future use */
+            /* background: linear-gradient(135deg, #334155, #4B5563); */
+            background-image: url('images/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #ffffff;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Adjusted overlay to ensure text readability */
+            background: rgba(51, 65, 85, 0.5); /* Using #334155 with opacity */
+            /* Commented out original radial gradient for future use */
+            /* background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%); */
+            z-index: 0;
+        }
+
+        #hero .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #hero h1 {
+            font-size: 50px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(99, 102, 241, 0.4);
+            letter-spacing: 1px;
+            animation: glowingText 2s ease-in-out infinite;
+        }
+
+        @keyframes glowingText {
+            0% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(99, 102, 241, 0.4);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(99, 102, 241, 0.6);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(99, 102, 241, 0.4);
+            }
+        }
+
+        #hero p {
+            font-size: 22px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            color: #f0f0f0;
+        }
+
+        #hero .journey-text {
+            font-size: 40px;
+            font-weight: 700;
+            margin: 30px 0;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        #hero .action-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            text-decoration: none;
+            color: #ffffff;
+            background: #6366F1;
+            padding: 15px 25px;
+            border-radius: 50px;
+            width: 200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .action-icon i {
+            font-size: 24px;
+        }
+
+        .action-icon:hover {
+            background-color: #4F46E5;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-icon span {
+            font-size: 16px;
+        }
+
+        /* How It Works Section */
+        #how-it-works {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+        }
+
+        #how-it-works h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: #ffffff;
+            padding: 30px;
+            width: 300px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            background-color: #f9f9f9;
+        }
+
+        .step .step-icon {
+            font-size: 40px;
+            color: #6366F1;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(79, 70, 229, 0.1));
+        }
+
+        .step:hover .step-icon {
+            transform: scale(1.1);
+            color: #4F46E5;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+            margin-top: 10px;
+        }
+
+        .step a {
+            color: #6366F1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .step a:hover {
+            color: #4F46E5;
+            text-decoration: underline;
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: #6366F1;
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            background-color: #4F46E5;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #back-to-top i {
+            font-size: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #334155, #4B5563);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        footer .footer-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #6366F1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+
+        footer .footer-links a i {
+            font-size: 18px;
+        }
+
+        footer .footer-links a:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            footer .footer-links a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            footer .footer-links a i {
+                font-size: 16px;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding-top: 60px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.active {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 0;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6366F1, #4F46E5);
+            color: white;
+            padding: 20px;
+            border-radius: 16px 16px 0 0;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 30px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .modal-body h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .modal-body p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        .modal-body ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .modal-body ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #6366F1;
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .modal-body a {
+            color: #6366F1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .modal-body a:hover {
+            color: #4F46E5;
+            text-decoration: underline;
+        }
+
+        .close {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f0f0f0;
+            transform: scale(1.2);
+        }
+
+        .modal-close-btn {
+            background-color: #fff;
+            color: #6366F1;
+            border: 2px solid #6366F1;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .modal-close-btn:hover {
+            background-color: #6366F1;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+                border-radius: 12px;
+            }
+
+            .modal-header {
+                font-size: 20px;
+                padding: 15px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-body h3 {
+                font-size: 18px;
+            }
+
+            .modal-body p,
+            .modal-body ul li {
+                font-size: 14px;
+            }
+
+            #hero h1 {
+                font-size: 36px;
+            }
+
+            #hero p {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            #hero .journey-text {
+                font-size: 28px;
+            }
+
+            .action-icon {
+                width: 180px;
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            .action-icons {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step {
+                width: 90%;
+                max-width: 350px;
+            }
+
+            #back-to-top {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            #back-to-top i {
+                font-size: 20px;
+            }
+        }
+    </style>
+
+           <!-- Favicon -->
+           <link href="images/icon.png" rel="icon">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="SnappQuest Logo">
+        </div>
+        <nav class="nav-links">
+            <a href="#how-it-works">Join a Quest</a>
+            <a href="#how-it-works">Create Quest</a>
+            <a href="#community">Join Community</a>
+        </nav>
+        <div class="hamburger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <div class="overlay"></div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Welcome to SnappQuest</h1>
+            <p>Your gateway to earning rewards by participating in Quests within the Solana ecosystem</p>
+            <div class="journey-text">Find your next Quest!</div>
+
+            <div class="action-icons">
+                <a href="#how-it-works" class="action-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Join a Quest</span>
+                </a>
+                <a href="#how-it-works" class="action-icon">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create Quest</span>
+                </a>
+                <a href="#community" class="action-icon">
+                    <i class="fas fa-users"></i>
+                    <span>Join Community</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-search"></i></div>
+                <h3>Explore Quests</h3>
+                <p>Discover exciting quests within the SnappQuest community</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-tasks"></i></div>
+                <h3>Complete Quests</h3>
+                <p>Participate and submit your efforts through Join Quest</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-trophy"></i></div>
+                <h3>Earn Rewards</h3>
+                <p>Earn rewards and track your progress on the <a href="https://twitter.com" target="_blank">leaderboard</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 SnappQuest. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></i> Follow us on X</a>
+            <a href="#" id="learn-more-link"><i class="fas fa-info-circle"></i> Find More Info</a>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Modal for Learn More Section -->
+    <div id="learnMoreModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>SnappQuest Overview</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>Vision</h3>
+                <p>SnappQuest exists to become the Engage-to-Earn layer for Superteam Nigeria and the Solana ecosystem, rewarding effort, not just outcomes.</p>
+
+                <h3>Mission</h3>
+                <p>To unlock opportunities for everyday contributors by rewarding meaningful participation through fast, fun, and verified Quests.</p>
+
+                <h3>The Problem</h3>
+                <p>Contributors and builders face visibility issues and engagement struggles. SnappQuest solves this by rewarding small efforts like feedback, social actions, and micro-content creation.</p>
+
+                <h3>The Solution: SnappQuest</h3>
+                <p>SnappQuest is a platform to incentivize participation, offering rewards for micro-tasks such as trivia, feedback loops, and social engagement.</p>
+
+                <h3>How SnappQuest Works</h3>
+                <p>Projects post Quests, verified contributors complete them, and rewards are distributed, tracked for reputation and growth.</p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Engage-to-Earn: Reward real participation</li>
+                    <li>Reputation System</li>
+                    <li>Verified Contributors Only</li>
+                </ul>
+
+                <h3>Long-Term Vision</h3>
+                <p>SnappQuest becomes the go-to platform for engagement across Solana, helping contributors, builders, and communities thrive.</p>
+
+                <button class="modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        const modal = document.getElementById("learnMoreModal");
+
+        // Get the link that opens the modal
+        const btn = document.getElementById("learn-more-link");
+
+        // Get the <span> element that closes the modal
+        const span = document.getElementsByClassName("close")[0];
+
+        // Get the close button
+        const closeBtn = document.querySelector(".modal-close-btn");
+
+        // Get hamburger menu elements
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        const overlay = document.querySelector(".overlay");
+
+        // Get back to top button
+        const backToTopButton = document.getElementById("back-to-top");
+
+        // Toggle hamburger menu
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+            overlay.classList.toggle("active");
+        });
+
+        // Close hamburger menu when a link is clicked
+        navLinks.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                navLinks.classList.remove("active");
+                overlay.classList.remove("active");
+            });
+        });
+
+        // Close hamburger menu when overlay is clicked
+        overlay.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navLinks.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+
+        // When the user clicks the link, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+            setTimeout(() => modal.classList.add("active"), 10);
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.classList.remove("active");
+            setTimeout(() => modal.style.display = "none", 300);
+        }
+
+        // When the user clicks the close button, close the modal
+        if (closeBtn) {
+            closeBtn.onclick = function () {
+                modal.classList.remove("active");
+                setTimeout(() => modal.style.display = "none", 300);
+            }
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.classList.remove("active");
+                setTimeout(() => modal.style.display = "none", 300);
+            }
+        }
+
+        // Back to Top Button Functionality
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add("visible");
+            } else {
+                backToTopButton.classList.remove("visible");
+            }
+        });
+
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+</body>
+
+</html>
