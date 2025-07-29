@@ -238,33 +238,61 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 18px;
             text-decoration: none;
             color: #ffffff;
-            background: #6366F1;
-            padding: 15px 25px;
-            border-radius: 50px;
-            width: 200px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+            padding: 16px 30px;
+            border-radius: 12px;
+            width: 220px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transition: all 0.4s ease;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
 
         .action-icon i {
             font-size: 24px;
+            transition: transform 0.4s ease;
         }
 
         .action-icon:hover {
-            background-color: #4F46E5;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6), 0 0 15px rgba(99, 102, 241, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .action-icon:hover i {
+            transform: scale(1.2) translateY(-2px);
         }
 
         .action-icon span {
             font-size: 16px;
+        }
+
+        /* Mobile Responsiveness for Action Icons */
+        @media (max-width: 768px) {
+            .action-icon {
+                width: 90%;
+                max-width: 300px;
+                padding: 14px 20px;
+                font-size: 16px;
+                gap: 10px;
+            }
+
+            .action-icon i {
+                font-size: 20px;
+            }
+
+            .action-icon span {
+                font-size: 14px;
+            }
         }
 
         /* How It Works Section */
@@ -630,12 +658,6 @@
                 font-size: 28px;
             }
 
-            .action-icon {
-                width: 180px;
-                padding: 12px 20px;
-                font-size: 16px;
-            }
-
             .action-icons {
                 flex-direction: column;
                 align-items: center;
@@ -665,8 +687,8 @@
         }
     </style>
 
-           <!-- Favicon -->
-           <link href="images/icon.png" rel="icon">
+    <!-- Favicon -->
+    <link href="images/icon.png" rel="icon">
 </head>
 
 <body>
@@ -676,7 +698,7 @@
             <img src="images/logo.png" alt="SnappQuest Logo">
         </div>
         <nav class="nav-links">
-            <a href="#how-it-works">Join a Quest</a>
+            <a href="#how-it-works">Start a Quest</a>
             <a href="#how-it-works">Create Quest</a>
             <a href="#community">Join Community</a>
         </nav>
@@ -696,7 +718,7 @@
             <div class="action-icons">
                 <a href="#how-it-works" class="action-icon">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Join a Quest</span>
+                    <span>Start a Quest</span>
                 </a>
                 <a href="#how-it-works" class="action-icon">
                     <i class="fas fa-plus-circle"></i>
@@ -722,7 +744,7 @@
             <div class="step">
                 <div class="step-icon"><i class="fas fa-tasks"></i></div>
                 <h3>Complete Quests</h3>
-                <p>Participate and submit your efforts through Join Quest</p>
+                <p>Participate and submit your efforts through Start Quest</p>
             </div>
             <div class="step">
                 <div class="step-icon"><i class="fas fa-trophy"></i></div>
@@ -736,7 +758,7 @@
     <footer>
         <p>&copy; 2025 SnappQuest. All rights reserved.</p>
         <div class="footer-links">
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></i> Follow us on X</a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Follow us on X</a>
             <a href="#" id="learn-more-link"><i class="fas fa-info-circle"></i> Find More Info</a>
         </div>
     </footer>
